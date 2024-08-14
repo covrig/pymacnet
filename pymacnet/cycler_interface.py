@@ -79,6 +79,37 @@ class CyclerInterface():
             logger.error("Failed to read system info!")
             return None
 
+    def read_channel_test_names(self, channel: int) -> dict:
+        """
+        Method to read data file name, test comment, procedure name and procedure description for the specified `channel`.
+
+        Returns
+        -------
+        names : dict
+            A dictionary detailing file name, test comment, procedure name and procedure description of the channel. Returns None if there is an issue.
+        """
+        names = {}
+
+        if not (channel > 0) and not (channel < self.__num_channels):
+            logger.warning("Invalid channel number!")
+            return None
+
+        try:
+            msg_outgoing_dict = copy.deepcopy(
+                pymacnet.messages.rx_read_names)
+            msg_outgoing_dict['params']['Chan'] = channel
+            names = self._send_receive_json_msg(msg_outgoing_dict)
+        except Exception as e:
+            logger.error(
+                f'Error reading file name, test comment, procedure name and procedure description for channel {channel}', exc_info=True)
+            logger.error(e)
+
+        if names and 'result' in names:
+            return names['result']
+        else:
+            logger.error("Failed to read channel file name, test comment, procedure name and procedure description")
+            return None
+    
     def read_channel_status(self, channel: int) -> dict:
         """
         Reads channel status for the specified `channel`.
