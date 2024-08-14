@@ -14,6 +14,7 @@
     - [ChannelInterface Configuration](#channelinterface-configuration)
   - [Getting Cycler Level Information](#getting-cycler-level-information)
   - [Getting Channel Readings](#getting-channel-readings)
+  - [Getting File Name, Test Comment, Procedure Name](#getting-file-name-test-comment-procedure-name)
   - [Starting a Test](#starting-a-test)
   - [Setting Variables](#setting-variables)
   - [Direct Control](#direct-control)
@@ -199,6 +200,52 @@ Example output:
 
 ```text
 {'FClass': 4, 'FNum': 7, 'Chan': 1, 'RF1': 0, 'RF2': 192, 'Stat': 0, 'LastRecNum': 4225, 'Cycle': 0, 'Step': 5, 'TestTime': 2.0, 'StepTime': 1.0, 'Capacity': 0, 'Energy': 0, 'Current': 0, 'Voltage': 3.85, 'TesterTime': '2022-10-13T12:32:56'}
+```
+
+
+### Getting File Name, Test Comment, Procedure Name
+
+Below is example code for reading read data file name, test comment, procedure name and procedure description from channel 75.
+
+```python
+import time
+import sys
+import pymacnet 
+
+config = {
+    "server_ip": "127.0.0.1",
+    "json_msg_port": 57570,
+    "bin_msg_port": 57560,
+    "msg_buffer_size_bytes": 1024
+    "channel": 75,
+    "test_name": "",
+    "c_rate_ah": 1,
+    "v_max_v": 4.2,
+    "v_min_v": 3.0,
+    "v_max_safety_limit_v": 4.25,
+    "v_min_safety_limit_v": 2.9,
+    "i_max_safety_limit_a": 3.0,
+    "i_min_safety_limit_a": 3.0,
+    "power_safety_limit_chg_w": 25,
+    "power_safety_limit_dsg_w": 25,
+    "data_record_time_s": 0.05,
+    "data_record_voltage_delta_vbys": 0.0,
+    "data_record_current_delta_abys": 0.0,
+    "test_procedure": "test_procedure_1",
+}
+    
+channel_interface = pymacnet.ChannelInterface(config)
+if not channel_interface.start():
+    sys.exit("failed to create connection!")
+
+status_reading = channel_interface.read_channel_test_names()
+print(status_reading)
+```
+
+Example output:
+
+```text
+{"FClass":4, "FNum":6, "Chan":3, "TestName":"Arbitrary file name 2016-11-10 10-07-05_126", "ProcName":"Send email"}
 ```
 
 ### Starting a Test
