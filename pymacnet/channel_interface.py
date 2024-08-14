@@ -65,8 +65,8 @@ class ChannelInterface(CyclerInterface):
 
         Returns
         -------
-        status : dict
-            A dictionary detailing the status of the channel. Returns None if there is an issue.
+        names : dict
+            A dictionary detailing file name, test comment, procedure name and procedure description of the channel. Returns None if there is an issue.
         """
         return super().read_channel_test_names(channel=(self.__channel))
     
