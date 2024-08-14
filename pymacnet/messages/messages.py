@@ -12,7 +12,20 @@ tx_read_status_msg = {
 """
 Gets the status and readings of one channel. The status and readings of `Chan` channel will be returned.
 """
-
+rx_read_names = {
+    'jsonrpc': '2.0',
+    'method': 'MacNet',
+    'params':
+    {
+        'FClass': 4,
+        'FNum': 6,
+        'Chan': -1
+    },
+    'id': 1987
+}
+"""
+The data file name, test comment, procedure name and procedure description of “Chan” channel will be returned.
+"""
 rx_read_status_msg = {
     'jsonrpc': '2.0',
     'result':
