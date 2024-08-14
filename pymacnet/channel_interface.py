@@ -59,6 +59,17 @@ class ChannelInterface(CyclerInterface):
         '''
         return self.__channel
 
+    def read_channel_test_names(self) -> dict:
+        """
+        Method to read data file name, test comment, procedure name and procedure description.
+
+        Returns
+        -------
+        status : dict
+            A dictionary detailing the status of the channel. Returns None if there is an issue.
+        """
+        return super().read_channel_test_names(channel=(self.__channel))
+    
     def read_channel_status(self) -> dict:
         """
         Method to read the status of the channel defined in the config.
